@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GraphController : MonoBehaviour
+public class GraphController : Singleton<GraphController>
 {
     [SerializeField] private GraphCreator _creator;
 

@@ -16,15 +16,21 @@ public class GraphCreator : MonoBehaviour
     public Graph CreateGraph()
     {
         Graph graph = new Graph();
+        int id = 0;
         foreach (Vertex vertex in vertices) 
         { 
+            //Debug.Log(vertex.gameObject.name);
             graph.AddVertex(vertex); 
+            if (vertex.AdjacentVertices == null) { Debug.Log(vertex.gameObject.name); }
             foreach (Vertex adjacentVertex in vertex.AdjacentVertices)
             {
                 if (!graph.GetEdgeByVertexes(vertex, adjacentVertex))
                 {
                     Edge edge = CreateEdge(vertex, adjacentVertex);
+                    edge.name = $"Edge {id++}";
                     graph.AddEdge(edge);
+                    vertex.AddEdge(edge);
+                    adjacentVertex.AddEdge(edge);
                 }
             }
         }
@@ -48,10 +54,6 @@ public class GraphCreator : MonoBehaviour
         Vector3 scale = edgeObject.transform.localScale;
         scale.y = distance.magnitude / size.magnitude;
         edgeObject.transform.localScale = scale;
-        Debug.Log("-----------  " + size);
-        Debug.Log(size);
-        Debug.Log(distance);
-        Debug.Log(distance.magnitude);
 
         Edge edge = edgeObject.GetComponent<Edge>();
         edge.SetPreset(first, second);
