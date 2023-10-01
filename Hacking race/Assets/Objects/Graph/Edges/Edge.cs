@@ -59,7 +59,7 @@ public class Edge : ElementOfGraph
     public void TurnOff()
     {
         Color color = Renderer.color;
-        color.a = 0.5f;
+        color.a = 1/5f;
         Renderer.color = color;
         First.RemoveEdge(this);
         Second.RemoveEdge(this);

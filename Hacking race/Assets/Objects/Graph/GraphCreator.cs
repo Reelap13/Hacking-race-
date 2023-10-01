@@ -72,7 +72,7 @@ public class GraphCreator : MonoBehaviour
         Vector3 size = edgeObject.GetComponent<SpriteRenderer>().bounds.size;
         Vector3 distance = Calculator.GetDistanceBetweenTwoObjects(first.Transform, second.Transform);
         Vector3 scale = edgeObject.transform.localScale;
-        scale.y = distance.magnitude / size.magnitude;
+        scale.y *= distance.magnitude / size.magnitude;
         edgeObject.transform.localScale = scale;
 
         Edge edge = edgeObject.GetComponent<Edge>();

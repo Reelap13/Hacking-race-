@@ -45,10 +45,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = distance.normalized * speed * Time.fixedDeltaTime;
         //Debug.Log(distance.magnitude);
         if (distance.magnitude <= distanceLocker)
-        {
-            Debug.Log("Lock");
             _isLockedMovement = true;
-        }
         
         if (move.magnitude > distance.magnitude || distance == Vector3.zero)
         {

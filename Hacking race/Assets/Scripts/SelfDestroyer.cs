@@ -14,4 +14,9 @@ public class SelfDestroyer : MonoBehaviour
         if (_time > _timeBeforeDestoing)
             Destroy(gameObject);
     }
+
+    public float GetLiveTime()
+    {
+        return _time;
+    }
 }

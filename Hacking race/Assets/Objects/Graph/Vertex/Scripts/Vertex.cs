@@ -15,7 +15,6 @@ public class Vertex : ElementOfGraph
         Transform = GetComponent<Transform>();
     }
 
-
     public override GraphicalMovementParameters GetParameters(Vector3 direction, GraphicalMovementParameters parameters)
     {
         //Debug.Log("in vertex point");
@@ -52,10 +51,16 @@ public class Vertex : ElementOfGraph
 
 
     public void AddEdge(Edge edge) => AdjacentEdges.AddLast(edge);
-    public void RemoveEdge(Edge edge)
+    public void RemoveEdge(Edge edge) => AdjacentEdges.Remove(edge);
+    public Vertex GetRandomAdjacentVertex()
     {
-        Debug.Log($"Count of edges before removing {AdjacentEdges.Count} {edge.name} {name}");
-        AdjacentEdges.Remove(edge);
-        Debug.Log($"Count of edges after removing {AdjacentEdges.Count} {edge.name} {name}");
+        int n = (int)UnityEngine.Random.Range(0, AdjacentEdges.Count) % AdjacentEdges.Count;
+        foreach (Edge edge in AdjacentEdges )
+        {
+            if (n == 0)
+                return edge.GetOtherVertex(this);
+            --n;
+        }
+        return null;
     }
 }
