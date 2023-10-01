@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
 
-public class TraceMacker : MonoBehaviour
+public class TracesMaker : MonoBehaviour
 {
     [SerializeField] private PlayerMovement _player;
     [SerializeField] private float _timeBetweenTraces;
@@ -11,6 +11,7 @@ public class TraceMacker : MonoBehaviour
 
     public Transform Transform => _player.Transform;
     private float _timeAfterTrace;
+    private Trace _lastTrace;
 
     private void Awake()
     {
@@ -36,6 +37,25 @@ public class TraceMacker : MonoBehaviour
             _player.GetDirection()) - 90; //90 - угол наклона спрайта
         Vector3 rotation = trace.transform.rotation.eulerAngles;
         trace.transform.rotation = Quaternion.Euler(rotation + new Vector3(0, 0, angle));
+
+        Trace tr = trace.GetComponent<Trace>();
+        if (_lastTrace)
+        {
+            tr.Previous = _lastTrace;
+            _lastTrace.Next = tr.Previous;
+        }
+        _lastTrace = tr;
     }
 
+    public void ClearTraces()
+    {
+        Trace trace = _lastTrace;
+        _lastTrace = null;
+        while (trace)
+        {
+            Trace temp = trace.Previous;
+            trace.ClearTrace();
+            trace = temp;
+        }
+    }
 }

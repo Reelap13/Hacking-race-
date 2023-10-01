@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 863041830115806756}
   - component: {fileID: 2236382006734322634}
+  - component: {fileID: 4863989437173158473}
   - component: {fileID: 5748422155037209228}
   m_Layer: 0
   m_Name: Trace
@@ -85,6 +86,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4863989437173158473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4174007634802117510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf74731cc17eef34db9cd4509f8600f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5748422155037209228
 MonoBehaviour:
   m_ObjectHideFlags: 0
