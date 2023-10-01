@@ -9,6 +9,7 @@ public class Edge : ElementOfGraph
     public Vertex Second { get; private set; }
     public Transform Transform { get; private set; }
     public SpriteRenderer Renderer { get; private set; }
+
     private void Awake()
     {
         Transform = GetComponent<Transform>();
@@ -27,6 +28,8 @@ public class Edge : ElementOfGraph
             return new GraphicalMovementParameters(parameters.Aim, this);
 
         Vertex aim = GetAim(direction);
+        if (aim == null)
+            return new GraphicalMovementParameters(parameters.Aim, this);
         //Debug.Log(aim);
         ElementOfGraph element = this;
         return new GraphicalMovementParameters(aim, element);
@@ -38,7 +41,9 @@ public class Edge : ElementOfGraph
         float secondAngle = Calculator.GetAngleOfRotationToDirectionVector(edgeDirection);
         float angle = Calculator.GetAngleOfRotationToDirectionVector(direction);
         //Debug.Log(firstAngle + " " + secondAngle + " " + angle + " " + MathF.Abs(firstAngle - angle) + " " + MathF.Abs(secondAngle - angle)  + " " + (MathF.Abs(firstAngle - angle) <= MathF.Abs(secondAngle - angle)));
-        return Calculator.CalculateAngle(firstAngle, angle) <= Calculator.CalculateAngle(secondAngle, angle) ? First : Second;
+        float fa = Calculator.CalculateAngle(firstAngle, angle);
+        float sa = Calculator.CalculateAngle(secondAngle, angle);
+        return  Mathf.Min(fa, sa) >= 55 ? null : fa < sa ? First : Second;
     }
 
     public bool IsSameVertex(Vertex first, Vertex second)

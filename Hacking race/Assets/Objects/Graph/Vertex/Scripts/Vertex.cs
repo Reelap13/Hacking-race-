@@ -23,6 +23,9 @@ public class Vertex : ElementOfGraph
             return new GraphicalMovementParameters(this, this);
 
         Edge edge = GetEdge(direction);
+        if (edge == null)
+            return new GraphicalMovementParameters(this, this);
+
         Vertex aim = edge.GetOtherVertex(this);
         ElementOfGraph element = edge;
         return new GraphicalMovementParameters(aim, element);
@@ -44,7 +47,7 @@ public class Vertex : ElementOfGraph
             }
             //Debug.Log(angle + " " + edgeAngle + " " + directionAngle + " " + minAngle + " " + edge.name);
         }
-        return selectedEdge;
+        return minAngle >= 55 ? null : selectedEdge;
     }
 
 
