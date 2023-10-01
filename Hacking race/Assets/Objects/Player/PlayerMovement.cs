@@ -62,6 +62,12 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public void Teleport(Vertex vertex)
+    {
+        _parameters = new GraphicalMovementParameters(vertex, vertex);
+        _transform.position = vertex.transform.position;
+    }
+
     private void SetActiveElement() => SetActiveElement(_parameters.Element);
     private void SetActiveElement(ElementOfGraph element)
     {

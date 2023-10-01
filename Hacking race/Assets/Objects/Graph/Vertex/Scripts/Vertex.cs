@@ -49,4 +49,10 @@ public class Vertex : ElementOfGraph
 
 
     public void AddEdge(Edge edge) => AdjacentEdges.AddLast(edge);
+    public void RemoveEdge(Edge edge)
+    {
+        Debug.Log($"Count of edges before removing {AdjacentEdges.Count} {edge.name} {name}");
+        AdjacentEdges.Remove(edge);
+        Debug.Log($"Count of edges after removing {AdjacentEdges.Count} {edge.name} {name}");
+    }
 }

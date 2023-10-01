@@ -8,9 +8,11 @@ public class Edge : ElementOfGraph
     public Vertex First { get; private set; }
     public Vertex Second { get; private set; }
     public Transform Transform { get; private set; }
+    public SpriteRenderer Renderer { get; private set; }
     private void Awake()
     {
         Transform = GetComponent<Transform>();
+        Renderer = GetComponent<SpriteRenderer>();
     }
     public void SetPreset(Vertex first, Vertex second)
     {
@@ -47,5 +49,23 @@ public class Edge : ElementOfGraph
     public Vertex GetOtherVertex(Vertex vertex)
     {
         return First == vertex ? Second : First;
+    }
+
+    public void TurnOff()
+    {
+        Color color = Renderer.color;
+        color.a = 0.5f;
+        Renderer.color = color;
+        First.RemoveEdge(this);
+        Second.RemoveEdge(this);
+    }
+
+    public void TurnOn()
+    {
+        Color color = Renderer.color;
+        color.a = 1f;
+        Renderer.color = color;
+        First.AddEdge(this);
+        Second.AddEdge(this);
     }
 }

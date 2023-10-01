@@ -6,7 +6,10 @@ using UnityEngine;
 public class GraphCreator : MonoBehaviour
 {
     [SerializeField] private Vertex[] vertices;
+    [SerializeField] private Switcher[] switchers;
     [SerializeField] private GameObject _edgePref;
+    [SerializeField] private GameObject _switchedEdgePref;
+
 
     private Transform _transform;
     private void Awake()
@@ -26,7 +29,7 @@ public class GraphCreator : MonoBehaviour
             {
                 if (!graph.GetEdgeByVertexes(vertex, adjacentVertex))
                 {
-                    Edge edge = CreateEdge(vertex, adjacentVertex);
+                    Edge edge = CreateEdge(vertex, adjacentVertex, _edgePref);
                     edge.name = $"Edge {id++}";
                     graph.AddEdge(edge);
                     vertex.AddEdge(edge);
@@ -35,12 +38,29 @@ public class GraphCreator : MonoBehaviour
             }
         }
 
+        id = 0;
+        foreach (Switcher switcher in switchers)
+        {
+            Vertex vertex = switcher.Vertex;
+            Edge[] edges = new Edge[switcher.AdjacentVertices.Length];
+            foreach (Vertex adjacentVertex in switcher.AdjacentVertices)
+            {
+                Edge edge = CreateEdge(vertex, adjacentVertex, _switchedEdgePref);
+                edge.name = $"Switched edge {id}";
+                edges[id] =  edge;
+                vertex.AddEdge(edge);
+                adjacentVertex.AddEdge(edge);
+                ++id;
+            }
+            switcher.SetPreset(edges);
+        }
+
         return graph;
     }
 
-    private Edge CreateEdge(Vertex first, Vertex second)
+    private Edge CreateEdge(Vertex first, Vertex second, GameObject edgePref)
     {
-        GameObject edgeObject = Instantiate(_edgePref) as GameObject;
+        GameObject edgeObject = Instantiate(edgePref) as GameObject;
         edgeObject.transform.parent = _transform;
         edgeObject.transform.position = Calculator.GetPositionBetweenTwoObjects(first.Transform, second.Transform);
 
