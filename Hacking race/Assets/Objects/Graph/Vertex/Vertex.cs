@@ -42,7 +42,7 @@ public class Vertex : ElementOfGraph
                 minAngle = angle;
                 selectedEdge = edge;
             }
-            Debug.Log(angle + " " + edgeAngle + " " + directionAngle + " " + minAngle + " " + edge.name);
+            //Debug.Log(angle + " " + edgeAngle + " " + directionAngle + " " + minAngle + " " + edge.name);
         }
         return selectedEdge;
     }
