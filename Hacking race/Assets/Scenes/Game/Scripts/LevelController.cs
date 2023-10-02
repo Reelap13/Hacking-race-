@@ -8,6 +8,7 @@ public class LevelController : MonoBehaviour
     public int LevelNumber { get; private set; }
     [SerializeField] private GraphController _graph;
     [SerializeField] private EnemyController _enemies;
+    [SerializeField] private string _text = "";
 
     public void LoadLevel()
     {
@@ -15,9 +16,15 @@ public class LevelController : MonoBehaviour
         _graph.CreateGraph();
 
         Player.Instance.SetPreset(_graph.StartVertex);
-        Player.Instance.ActivatePlayer();
 
         _enemies.gameObject.SetActive(true);
+        _enemies.SetPresetEnemies();
+        GameUIController.Instance.ShowTextForStartingGame(_text);
+    }
+
+    public void StartGame()
+    {
+        Player.Instance.ActivatePlayer();
         _enemies.ActivateEnemies();
     }
 

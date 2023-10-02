@@ -6,11 +6,18 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] private Enemy[] _enemies;
 
-    public void ActivateEnemies()
+    public void SetPresetEnemies()
     {
         foreach (Enemy enemy in _enemies)
         {
             enemy.SetPreset();
+        }
+    }
+
+    public void ActivateEnemies()
+    {
+        foreach (Enemy enemy in _enemies)
+        {
             enemy.ActivateEnemy();
         }
     }

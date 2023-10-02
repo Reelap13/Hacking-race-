@@ -8,6 +8,7 @@ public class GameUIController : Singleton<GameUIController>
     [SerializeField] private GameObject _winningWindow;
     [SerializeField] private GameObject _losingWindow;
     [SerializeField] private GameObject _passingGameWindow;
+    [SerializeField] private ShowingText _showingText;
 
     public void ShowWinningWindow()
     {
@@ -38,7 +39,11 @@ public class GameUIController : Singleton<GameUIController>
         _losingWindow.SetActive(false);
         GameController.Instance.StartNextLevel();
     }
-
+    public void ShowTextForStartingGame(string text)
+    {
+        _showingText.gameObject.SetActive(true);
+        _showingText.ShowText(text);
+    }
     public void ShowPassingGameWindow()
     {
         _passingGameWindow.SetActive(true);
