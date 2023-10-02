@@ -15,6 +15,11 @@ public class Vertex : ElementOfGraph
         Transform = GetComponent<Transform>();
     }
 
+    public void SetPreset()
+    {
+        AdjacentEdges.Clear();
+    }
+
     public override GraphicalMovementParameters GetParameters(Vector3 direction, GraphicalMovementParameters parameters)
     {
         //Debug.Log("in vertex point");
@@ -49,9 +54,15 @@ public class Vertex : ElementOfGraph
         return minAngle >= 55 ? null : selectedEdge;
     }
 
-
-    public void AddEdge(Edge edge) => AdjacentEdges.AddLast(edge);
-    public void RemoveEdge(Edge edge) => AdjacentEdges.Remove(edge);
+    public void AddEdge(Edge edge)
+    {
+        if (AdjacentEdges.Contains(edge)) return;
+        AdjacentEdges.AddLast(edge);
+    }
+    public void RemoveEdge(Edge edge)
+    {
+        AdjacentEdges.Remove(edge);
+    }
     public Vertex GetRandomAdjacentVertex()
     {
         int n = (int)UnityEngine.Random.Range(0, AdjacentEdges.Count) % AdjacentEdges.Count;

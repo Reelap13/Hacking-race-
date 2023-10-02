@@ -16,4 +16,13 @@ public class Graph
             if (edge.IsSameVertex(first, second)) return edge;
         return null;
     }
+
+    public LinkedList<Edge> GetEdges()
+    {
+        return edges;
+    }
+    public LinkedList<Vertex> GetVertices()
+    {
+        return vertices;
+    }
 }

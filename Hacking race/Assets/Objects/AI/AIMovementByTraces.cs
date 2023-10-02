@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIMovementByTraces : MonoBehaviour
+public class AIMovementByTraces : EnemyMovement
 {
     [SerializeField] private float _speed;
     [SerializeField] private float _followingSpeed;
@@ -13,23 +13,20 @@ public class AIMovementByTraces : MonoBehaviour
     private Vertex _currentVertex;
     public Transform Transform { get; private set; }
     public Rigidbody2D Rigidbody { get; private set; }
+    private bool _isGame;
     
     private void Awake()
     {
         Transform = GetComponent<Transform>();
         Rigidbody = GetComponent<Rigidbody2D>();
+        _isGame = false;
     }
 
-    private void Start()
-    {
-        _previousVertex = _startVertex;
-        _currentVertex = _startVertex;
-        Transform.position = _startVertex.Transform.position;
-    }
 
 
     private void FixedUpdate()
     {
+        if (!_isGame) return;
         if (_trace)
             MoveByTrace();
         else if (_currentVertex)
@@ -72,7 +69,7 @@ public class AIMovementByTraces : MonoBehaviour
             MoveByTrace();
             return;
         }*/
-        Vector3 move = distance.normalized * _speed * Time.fixedDeltaTime;
+        Vector3 move = distance.normalized * _followingSpeed * Time.fixedDeltaTime;
 
         if (distance.magnitude < move.magnitude || distance == Vector3.zero)
         {
@@ -90,7 +87,7 @@ public class AIMovementByTraces : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Tag tag = TagsMethod.ParseStringToTag(collision.tag);
-
+        Debug.Log(tag);
         if (Tag.VERTEX == tag && _trace)
             SetVertex(collision.GetComponent<Vertex>());
         if (Tag.TRACE == tag)
@@ -100,7 +97,7 @@ public class AIMovementByTraces : MonoBehaviour
     private void SetTrace() => SetTrace(_trace?.Next);
     public void SetTrace(Trace trace)
     {
-        if (trace)
+        if (!trace)
             return;
         if (!_trace)
             _trace = trace;
@@ -119,5 +116,20 @@ public class AIMovementByTraces : MonoBehaviour
     {
         _previousVertex = _currentVertex;
         _currentVertex = vertex;
+    }
+
+    public override void SetPreset()
+    {
+        _previousVertex = _startVertex;
+        _currentVertex = _startVertex;
+        transform.position = _startVertex.Transform.position;
+    }
+    public override void Activate()
+    {
+        _isGame = true;
+    }
+    public override void Disactivate()
+    {
+        _isGame = false;
     }
 }

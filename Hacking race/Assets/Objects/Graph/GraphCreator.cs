@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GraphCreator : MonoBehaviour
@@ -19,6 +20,8 @@ public class GraphCreator : MonoBehaviour
     public Graph CreateGraph()
     {
         Graph graph = new Graph();
+        foreach (Vertex v in vertices)
+            v.SetPreset();
         int id = 0;
         foreach (Vertex vertex in vertices) 
         { 
@@ -47,7 +50,8 @@ public class GraphCreator : MonoBehaviour
             {
                 Edge edge = CreateEdge(vertex, adjacentVertex, _switchedEdgePref);
                 edge.name = $"Switched edge {id}";
-                edges[id] =  edge;
+                edges[id] = edge;
+                graph.AddEdge(edge);
                 vertex.AddEdge(edge);
                 adjacentVertex.AddEdge(edge);
                 ++id;

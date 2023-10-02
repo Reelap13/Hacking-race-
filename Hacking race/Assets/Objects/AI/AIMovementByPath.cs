@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIMovementByPath : MonoBehaviour
+public class AIMovementByPath : EnemyMovement
 {
     [field: SerializeField]
     public Vertex[] Vertices { get; private set; }
@@ -11,21 +12,17 @@ public class AIMovementByPath : MonoBehaviour
     public Transform Transform { get; private set; }
     public Rigidbody2D Rigidbody { get; private set; }
     private int _index;
-    private void Start()
+    private bool _isGame;
+    private void Awake()
     {
         Transform = GetComponent<Transform>();
         Rigidbody = GetComponent<Rigidbody2D>();
-        _index = 0;
-        if (Vertices.Length == 0)
-        {
-            Debug.Log("Unit was spawned without way!");
-            return;
-        }
-        Transform.position = Vertices[0].Transform.position;
+        _isGame = false;
     }
 
     private void FixedUpdate()
     {
+        if (!_isGame) return;
         Vector3 distance = Calculator.GetDistanceBetweenTwoObjects(Transform, Vertices[_index % Vertices.Length].Transform);
         if (distance == Vector3.zero)
         {
@@ -45,5 +42,25 @@ public class AIMovementByPath : MonoBehaviour
         {
             Rigidbody.MovePosition(Transform.position + move);
         }
+    }
+
+    public override void SetPreset()
+    {
+        _index = 0;
+        if (Vertices.Length == 0)
+        {
+            Debug.Log("Unit was spawned without way!");
+            return;
+        }
+        else
+            transform.position = Vertices[0].Transform.position;
+    }
+    public override void Activate()
+    {
+        _isGame = true;
+    }
+    public override void Disactivate()
+    {
+        _isGame = false;
     }
 }

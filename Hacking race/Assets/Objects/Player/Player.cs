@@ -8,4 +8,19 @@ public class Player : Singleton<Player>
     public PlayerMovement Movement { get; private set; }
     [field: SerializeField]
     public TracesMaker TraceMaker { get; private set; }
+
+
+    public void SetPreset(Vertex startVertex)
+    {
+        Movement.SetPreset(startVertex);
+    }
+    public void ActivatePlayer()
+    {
+        Movement.ActivatePlayer();
+    }
+
+    public void DisactivatePlayer()
+    {
+        Movement.DisactivatePlayer();
+    }
 }

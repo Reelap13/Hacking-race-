@@ -13,6 +13,6 @@ public class WinningVertex : MonoBehaviour
 
     private void Win()
     {
-        Debug.Log("You are winner!");
+        GameController.Instance.LevelController.Win();
     }
 }

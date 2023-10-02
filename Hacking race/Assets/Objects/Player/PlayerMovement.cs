@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Vertex StartElement;
     [SerializeField] private float speed = 1;
     [SerializeField] private float distanceLocker = 0.2f;
 
@@ -14,19 +13,42 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _keyboardDirection;
     private GraphicalMovementParameters _parameters;
     private ElementOfGraph _activeElement;
+    private Vertex _startVertex;
     private bool _isLockedMovement;
+    private bool _isGame;
     private void Awake()
     {
         _transform = transform;
         _rigidbody = GetComponent<Rigidbody2D>();
-        _transform.position = StartElement.transform.position;
-        _parameters = new GraphicalMovementParameters(StartElement, StartElement);
+        _isLockedMovement = false;
+        _isGame = false;
+    }
+    public void SetPreset(Vertex startVertex)
+    {
+        _startVertex = startVertex;
+        _transform.position = startVertex.transform.position;
+        _parameters = new GraphicalMovementParameters(startVertex, startVertex);
+    }
+    public void ActivatePlayer()
+    {
+        _transform.position = _startVertex.transform.position;
+        _parameters = new GraphicalMovementParameters(_startVertex, _startVertex);
         SetActiveElement();
         _isLockedMovement = false;
+        _isGame = true;
+    }
+
+    public void DisactivatePlayer()
+    {
+        _parameters = null;
+        _isLockedMovement = false;
+        _isGame = false;
     }
 
     private void Update()
     {
+        if (!_isGame || !_parameters?.Element)
+            return;
         _keyboardDirection.x = Input.GetAxisRaw("Horizontal");
         _keyboardDirection.y = Input.GetAxisRaw("Vertical");
 
@@ -40,6 +62,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!_isGame)
+            return;
         //Debug.Log(_parameters.Element.name);
         Vector3 distance = (_parameters.Aim.Transform.position - _transform.position);
         Vector3 move = distance.normalized * speed * Time.fixedDeltaTime;
@@ -79,6 +103,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsMoving()
     {
+        if (_parameters == null) return false;
         Vector3 distance = (_parameters.Aim.Transform.position - _transform.position);
         return distance != Vector3.zero;
     }

@@ -13,6 +13,6 @@ public class DeathPoint : MonoBehaviour
 
     private void Lose()
     {
-        Debug.Log("Game over");
+        GameController.Instance.LevelController.KillPlayer();
     }
 }
