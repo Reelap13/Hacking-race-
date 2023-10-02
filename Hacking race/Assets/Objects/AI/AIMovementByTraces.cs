@@ -64,7 +64,6 @@ public class AIMovementByTraces : MonoBehaviour
     {
         if (_trace == null)
             return;
-        Debug.Log("Following by trace");
 
         Vector3 distance = Calculator.GetDistanceBetweenTwoObjects(Transform, _trace.Transform);
         /*if (distance == Vector3.zero)
@@ -90,9 +89,7 @@ public class AIMovementByTraces : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("HI");
         Tag tag = TagsMethod.ParseStringToTag(collision.tag);
-        Debug.Log(tag);
 
         if (Tag.VERTEX == tag && _trace)
             SetVertex(collision.GetComponent<Vertex>());
@@ -103,7 +100,8 @@ public class AIMovementByTraces : MonoBehaviour
     private void SetTrace() => SetTrace(_trace?.Next);
     public void SetTrace(Trace trace)
     {
-        Debug.Log($"Trace: {_trace == null} {trace == null}");
+        if (trace)
+            return;
         if (!_trace)
             _trace = trace;
         else
