@@ -5,10 +5,12 @@ using UnityEngine;
 public class GameController : Singleton<GameController>
 {
     [SerializeField] private LevelController[] levelControllers;
+    [SerializeField] int p;
     private int _levelNumber;
     private LevelController _levelController;
     private void Awake()
-    {
+    { 
+        PlayerPrefs.SetInt("Level_number", p);
         LoadData();
         //vStartCoroutine(s());
     }
