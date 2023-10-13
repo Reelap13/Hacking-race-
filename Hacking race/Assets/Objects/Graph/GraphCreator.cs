@@ -41,11 +41,11 @@ public class GraphCreator : MonoBehaviour
             }
         }
 
-        id = 0;
         foreach (Switcher switcher in switchers)
         {
             Vertex vertex = switcher.Vertex;
             Edge[] edges = new Edge[switcher.AdjacentVertices.Length];
+            id = 0;
             foreach (Vertex adjacentVertex in switcher.AdjacentVertices)
             {
                 Edge edge = CreateEdge(vertex, adjacentVertex, _switchedEdgePref);

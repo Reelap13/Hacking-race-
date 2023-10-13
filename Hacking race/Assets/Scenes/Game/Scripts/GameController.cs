@@ -8,9 +8,9 @@ public class GameController : Singleton<GameController>
     [SerializeField] int p;
     private int _levelNumber;
     private LevelController _levelController;
-    private void Awake()
+    private void Start()
     { 
-        PlayerPrefs.SetInt("Level_number", p);
+        //PlayerPrefs.SetInt("Level_number", p);
         LoadData();
         //vStartCoroutine(s());
     }

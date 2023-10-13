@@ -15,6 +15,7 @@ public class LevelController : MonoBehaviour
         _graph.gameObject.SetActive(true);
         _graph.CreateGraph();
 
+        CameraController.Instance.transform.position = Player.Instance.transform.position - new Vector3(0, 0, 1) *CameraController.Instance._distanceFromAim;
         Player.Instance.SetPreset(_graph.StartVertex);
 
         _enemies.gameObject.SetActive(true);

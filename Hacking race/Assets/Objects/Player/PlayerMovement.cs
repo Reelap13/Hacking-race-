@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     public void SetPreset(Vertex startVertex)
     {
         _startVertex = startVertex;
-        _transform.position = startVertex.transform.position;
+        transform.position = startVertex.transform.position;
         _parameters = new GraphicalMovementParameters(startVertex, startVertex);
     }
     public void ActivatePlayer()
