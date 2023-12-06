@@ -97,7 +97,7 @@ public class AIMovementByTraces : EnemyMovement
     private void SetTrace() => SetTrace(_trace?.Next);
     public void SetTrace(Trace trace)
     {
-        if (trace == null)s
+        if (trace == null)
             return;
         if (!_trace)
             _trace = trace;
